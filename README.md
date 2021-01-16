@@ -509,3 +509,36 @@ size= 15
 ```
 
 after typing some line than exit for press `CTRL + D`
+
+
+___
+## core streams in node
+many APIs in node core stream:
+
+* fs.createReadStream()
+* fs.createWriteStream()
+* process.stdin, process.stderr
+* ps.stdin, ps.stdout, ps.stderr
+* net.connect(), tls.connect()
+* net.createServer(function (stream) {})
+* tls.createServer(opts, function (stream) {})
+
+### stdin
+
+Create `core-stream.js`
+```js
+let spawn = require('child_process').spawn;
+let ps = spawn('grep', ['potato']); // match string in input
+ps.stdout.pipe(process.stdout);
+ps.stdin.write('cheese\n');
+ps.stdin.write('charrots\n');
+ps.stdin.write('charrots potatoes\n');
+ps.stdin.write('potato!\n');
+ps.stdin.end();
+```
+In **terminal**
+```
+$ node core-stream.js
+charrots potatoes
+potato!
+```
