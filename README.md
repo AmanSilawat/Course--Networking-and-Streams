@@ -350,19 +350,162 @@ transform: A.pipe(transform).pipe(B)
 duplex: A.pipe(duplex).pipe(A)
 
 ##### writable
-.write(buf)
-.end()
-.end(buf)
-.on('finish', function () {})
-(...).pipe(stream)
+* .write(buf)
+* .end()
+* .end(buf)
+* .on('finish', function () {})
+* (...).pipe(stream)
 
-```
+
+Create new file `write.js`
+```js
 let fs = require('fs');
-let w = fs.createWriteStream('greet.txt');
-w.on('finish', function() {
-    console.log('FINISHED);
+let w = fs.createWriteStream('hello.txt');
+w.on('finish', function () {
+    console.log('FINISHED');
 })
 w.write('hi\n');
 w.write('wow\n');
 w.end();
 ```
+
+Create `hello.js`
+```
+Type some string.
+```
+
+In **terminal**
+```
+$ node write.js
+FINISHED
+
+$ cat hello.js
+hi
+wow
+```
+
+
+
+#### Readable
+Create `write.js`
+```js
+let fs = require('fs');
+let read = fs.createReadStream(process.argv[2]);
+read.pipe(process.stdout);
+```
+
+Create `hello.txt`
+```
+Hello my name is Aman Silawat.
+```
+
+In **terminal**
+
+```
+$ node read.js hello.txt
+Hello my name is Aman Silawat.
+```
+
+
+####  Duplex
+readable + writable stream where input is decoupled from output
+
+```
+a.pipe(stream).pipe(a)
+```
+
+create `duplex.js`
+
+```js
+let net = require('net');
+net.createServer(function(stream) {
+    stream.pipe(stream)
+}).listen(5000)
+```
+
+In first **terminal**
+```
+$ node duplex.js 
+```
+
+In second **terminal**
+```
+$ nc localhost 5000
+type any word and press enter
+type any word and press enter
+hello
+hello
+hi
+hi
+```
+After run this command `nc localhost 5000`.
+type any word and press enter **duplex** is read and write your word. nc mean `netcat`.
+
+
+### Object streams
+
+#### Example one
+get stream and stream length and size put in the object.
+
+create `obj1.js`
+```js
+let through = require('through2')
+let size = 0;
+process.stdin
+    .pipe(through.obj(write1))
+    .pipe(through.obj(write2))
+
+function write1(buf, enc, next) {
+    next(null, {length: buf.length, total: size += buf.length})
+}
+
+function write2(obj, enc, next) {
+    console.log('obj= ', obj);
+    next();
+}
+```
+
+In **terminal**
+```
+$ node obj1.js
+type any character
+obj=  { length: 19, total: 19 }
+type multiple lines
+obj=  { length: 20, total: 39 }
+```
+
+#### Example two
+when stream is ended than steam size put in the object.
+
+create `obj2.js`
+```js
+let through = require('through2')
+let size = 0;
+process.stdin
+    .pipe(through.obj(write1))
+    .pipe(through.obj(write2, end))
+
+function write1(buf, enc, next) {
+    next(null, {length: buf.length})
+}
+
+function write2(obj, enc, next) {
+    size += obj.length;
+    next();
+}
+
+function end() {
+    console.log('size=', size);
+}
+```
+
+In **terminal**
+```
+$ node obj2.js
+type
+any 
+thing
+size= 15
+```
+
+after typing some line than exit for press `CTRL + D`
