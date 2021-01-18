@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "multiplex": "^6.7.0",
+    "net": "^1.0.2",
+    "rpc-stream": "^2.1.2"
+  }
+}
