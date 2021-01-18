@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "duplexify": "^4.1.1",
+    "fs": "^0.0.1-security",
+    "mkdirp": "^1.0.4",
+    "split2": "^3.2.2",
+    "to2": "^1.0.0"
+  }
+}
