@@ -6,29 +6,29 @@ ___
 
 Protocols mean each computer talk each other.
 
-HTTP: browse web pages.
-HTTPS: browser web pages with encryption.
-SMTP: send and receive emails.
-IMAP, POP3 - load emails from inbox
-IRC: chat
-FTP: file transfer
-SSH: remote shell over an encrypted connection
-SSL: low-level secure data transfer (used by HTTPS)
+- HTTP: browse web pages.
+- HTTPS: browser web pages with encryption.
+- SMTP: send and receive emails.
+- IMAP, POP3 - load emails from inbox
+- IRC: chat
+- FTP: file transfer
+- SSH: remote shell over an encrypted connection
+- SSL: low-level secure data transfer (used by HTTPS)
 
 
 ### customary Ports
 A port number is a between 1 and 65535
 Any service can listen on any port, but there are customary ports for many protocols:
 
-21 - FTP (control port)
-22 - SSH
-25 - SMTP
-80 - HTTP
-443 - HTTPS
-3306 - MYSQL
-5432 - POSTGRESQL
-5984 - COUCHDB
-667 - IRC
+- 21 - FTP (control port)
+- 22 - SSH
+- 25 - SMTP
+- 80 - HTTP
+- 443 - HTTPS
+- 3306 - MYSQL
+- 5432 - POSTGRESQL
+- 5984 - COUCHDB
+- 667 - IRC
 
 
 ### port and permission
@@ -40,6 +40,44 @@ $ nc -lp 1024
 Can't grab 0.0.0.0:1023 with bind: Permission denied
 $ nc -lp 1023
 ```
+
+
+### Netcat
+Netcat can create TCP and UDP connections and servers.
+
+
+How to install Netcat
+```
+sudo apt-get install netcat
+```
+
+With netcat you cat speak TCP directly.
+type in a terminal.
+```bash
+$ nc -lp 5000
+```
+
+
+type another terminal.
+```bash
+$ nc localhost 500
+```
+
+then send some message.
+
+
+### 
+```bash
+$ nc -v google.com 80
+GET index.html HTTP/1.1
+```
+
+### Curl
+get back html
+```
+$ curl -s http://substack.net
+```
+
 ___
 ## Streams
 data transmits on chunks. stream all type of files like audio, video, text etc.

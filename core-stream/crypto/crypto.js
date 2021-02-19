@@ -1,7 +1,11 @@
 let createHash = require('crypto').createHash
 
-process.stdin.pipe(createHash('sha512'))
+process.stdin.pipe(createHash('sha512', {encoding: 'hex'}))
     .pipe(process.stdout);
+
+// process.stdin.pipe(createHash('sha512'))
+//     .pipe(process.stdout);
+
 
 
 // $ node crypto.js
