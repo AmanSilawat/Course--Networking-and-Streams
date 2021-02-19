@@ -7,6 +7,7 @@ server.listen(5000)
 
 let socket = require('websocket-stream')
 socket.createServer({ server: server }, function (stream) {
+    // `stream` is a duplex stream
     stream.pipe(loud()).pipe(stream)
 })
 

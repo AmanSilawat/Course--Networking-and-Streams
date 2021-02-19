@@ -7,14 +7,8 @@ let fs = require('fs')
 
 module.exports = function (name) {
     let d = duplexify()
-    mkdirp('logs', function (err) {
-        let w = fs.createWriteStream('logs/' + name + '.log')
-        d.setWritable(w)
-    })
+    mkdirp.sync('logs')
+    let w = fs.createWriteStream('logs/' + name + '.log')
+    d.setWritable(w)
     return d
 }
-
-// ! not working
-// throw new TypeError('invalid options argument')
-// ^
-// TypeError: invalid options argument
