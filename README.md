@@ -78,6 +78,11 @@ get back html
 $ curl -s http://substack.net
 ```
 
+
+get back only header
+```
+$ curl -I http://substack.net
+```
 ___
 ## Streams
 data transmits on chunks. stream all type of files like audio, video, text etc.
